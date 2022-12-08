@@ -9,9 +9,9 @@
   },
   "name": "backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-        "start:dev":"node index.js"
+    "start:dev":"nodemon app.js"
 
   },
   "keywords": [],
