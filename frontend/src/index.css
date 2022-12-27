@@ -1,0 +1,34 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(1rem, .8rem + .5vw, 2rem);
+  
+}
+a{
+    text-decoration: none;
+    color: inherit;
+}
+h1{
+  letter-spacing: 1px;
+}
+h3{
+  margin-bottom: .3rem;
+}
+ul{
+  list-style-type: none;
+}
+p{
+  font-size:.85rem;
+  line-height: 1.5;
+  color: #615451;
+}
+.btn{
+  padding: .7rem 1.3rem;
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+}

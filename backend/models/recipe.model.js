@@ -5,7 +5,6 @@ const ObjectId = Schema.ObjectId;
 
 const RecipeSchema = new Schema({
   id: ObjectId,
-  status: String,
   data: {
     recipe: {
       publisher: String,
@@ -14,6 +13,7 @@ const RecipeSchema = new Schema({
           quantity: Number,
           unit: String,
           description: String,
+          _id: false,
         },
       ],
       source_url: String,
@@ -21,12 +21,11 @@ const RecipeSchema = new Schema({
       title: String,
       servings: Number,
       cooking_time: Number,
-      recipeID: String,
     },
   },
-  foodID: {
+  categoryID: {
     type: Schema.Types.ObjectId,
-    ref: 'recipes',
+    ref: 'categories',
   },
 });
 

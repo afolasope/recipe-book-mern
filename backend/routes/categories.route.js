@@ -5,4 +5,4 @@ const categoryRouter = express.Router();
 
 categoryRouter.get('/', getAllCategories);
 
-module.exports=categoryRouter
+module.exports = categoryRouter;
