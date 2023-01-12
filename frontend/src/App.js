@@ -1,16 +1,19 @@
-import Home from './pages/Home';
-import styled from 'styled-components';
-import { ReactQueryDevtools } from 'react-query/devtools';
-import { IoMdAdd } from 'react-icons/io';
+import { useState } from 'react';
 import { BsFillBookmarkFill } from 'react-icons/bs';
-import { QueryClientProvider, QueryClient } from 'react-query';
+import { IoMdAdd } from 'react-icons/io';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { Route, Routes } from 'react-router-dom';
-import SingleRecipe from './components/SingleRecipe';
+import styled from 'styled-components';
 import RecipesList from './components/RecipesList';
+import SingleRecipe from './components/SingleRecipe';
+import Home from './pages/Home';
 
 const queryClient = new QueryClient();
 
 function App() {
+  const [queryID, setQueryID] = useState();
+
   return (
     <QueryClientProvider client={queryClient}>
       <Wrapper>
@@ -33,9 +36,18 @@ function App() {
         </header>
 
         <Routes>
-          <Route path="/" element={<Home />}>
+          <Route
+            path="/"
+            element={<Home queryID={queryID} setQueryID={setQueryID} />}
+          >
             <Route path="/" element={<RecipesList />} />
-            <Route path="/single-recipe" element={<SingleRecipe />} />
+            <Route path="/:id" element={<RecipesList />} />
+            <Route
+              path="/single-recipe/:id"
+              element={
+                <SingleRecipe queryID={queryID} setQueryID={setQueryID} />
+              }
+            />
           </Route>
         </Routes>
       </Wrapper>

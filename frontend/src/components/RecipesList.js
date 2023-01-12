@@ -1,26 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import { useRecipesData } from '../hooks/useRecipesData';
 
-
 const RecipesList = () => {
-  const { data, isLoading, isError } = useRecipesData();
+  const { id } = useParams();
+  const { data, isLoading, isError } = useRecipesData(id);
+
+  useEffect(() => {
+    localStorage.setItem('recipesList', JSON.stringify(data));
+  }, [data]);
+
   if (isLoading) {
     return <h1>Loading...</h1>;
   }
   if (isError) {
-    return <h1>Something went wrong, Please refresh Page</h1>;
+    return <h1>Something went wrong...</h1>;
   }
 
   return (
     <Wrapper>
       {data.map(
-        (
-          { id, image_url, title, publisher, servings, cooking_time },
-        ) => {
+        ({ id, image_url, title, publisher, servings, cooking_time }) => {
           return (
-            <Link to="single-recipe" key={id} className="card">
+            <Link to={`/single-recipe/${id}`} key={id} className="card">
               <div className="image-container">
                 <img src={image_url} alt="" />
               </div>

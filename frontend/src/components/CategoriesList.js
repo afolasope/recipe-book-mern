@@ -1,15 +1,9 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useCategoryData } from '../hooks/useCategoryData';
-import { useRecipesData } from '../hooks/useRecipesData';
 
-const CategoriesList = () => {
-  const [currId, setCurrId] = useState('638f7e7c929d5ef3f04e439c');
-  const { refetch } = useRecipesData(currId);
-
+const CategoriesList = ({ setQueryID }) => {
   const { data, isLoading } = useCategoryData();
 
   if (isLoading) {
@@ -22,14 +16,7 @@ const CategoriesList = () => {
         <ul className="list-items">
           {data.map(({ name, image, id }) => {
             return (
-              <Link
-                key={id}
-                to="/"
-                onClick={() => {
-                  setCurrId(id);
-                  refetch();
-                }}
-              >
+              <Link key={id} to={`/${id}`} onClick={() => setQueryID(id)}>
                 <li className="list-item">
                   <div className="image-container">
                     <img src={image} alt="food" />

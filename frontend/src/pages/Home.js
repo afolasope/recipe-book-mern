@@ -3,11 +3,11 @@ import { Outlet } from 'react-router';
 import styled from 'styled-components';
 import CategoriesList from '../components/CategoriesList';
 
-const Home = () => {
+const Home = ({queryID,setQueryID}) => {
   return (
     <Wrapper>
       <aside>
-        <CategoriesList />
+        <CategoriesList queryID={queryID} setQueryID={setQueryID} />
       </aside>
       <main>
         <Outlet />

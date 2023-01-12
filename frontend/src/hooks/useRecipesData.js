@@ -5,12 +5,12 @@ const fetchRecipes = (categoryID) => {
   return axios.get(`http://localhost:8000/recipes/category/${categoryID}`);
 };
 
-const useRecipesData = (categoryID = '638f7e7c929d5ef3f04e439c') => {
+const useRecipesData = (categoryID = '638f7e7c929d5ef3f04e439f') => {
   return useQuery(['recipes', categoryID], () => fetchRecipes(categoryID), {
     select: (data) => {
       const info = data.data.map(
         ({
-          _id: id,  
+          _id: id,
           data: {
             recipe: {
               cooking_time,
@@ -37,6 +37,7 @@ const useRecipesData = (categoryID = '638f7e7c929d5ef3f04e439c') => {
       );
       return info;
     },
+    // enabled: !!categoryID,
   });
 };
 
