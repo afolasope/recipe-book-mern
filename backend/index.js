@@ -14,6 +14,7 @@ const { createRecipe } = require('./factory/recipe.factory');
 
 const categoryRouter = require('./routes/categories.route');
 const recipeRouter = require('./routes/recipes.route');
+const authRouter = require('./routes/auth.routes');
 
 app.use(
   cors({
@@ -24,8 +25,9 @@ app.use(
 app.get('/', (req, res) => {
   res.send('Welcome to the recipee book ');
 });
-app.use('/categories', categoryRouter);
-app.use('/recipes', recipeRouter);
+app.use('/api/v1/categories', categoryRouter);
+app.use('/api/v1/recipes', recipeRouter);
+app.use('/api/v1/auth', authRouter);
 
 app.listen(PORT, () => {
   console.log(`server is listening on PORT:${PORT}`);
