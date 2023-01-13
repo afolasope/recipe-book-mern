@@ -24,18 +24,17 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true,
+    select: false,
   },
 });
 
-
 UserSchema.pre('save', async function (next) {
-    if (!this.isModified('password')) return next();
-    
-    const hash = await bcrypt.hash(this.password, 12);
-    this.password = hash;
-    next();
-});
+  if (!this.isModified('password')) return next();
 
+  const hash = await bcrypt.hash(this.password, 12);
+  this.password = hash;
+  next();
+});
 
 const UserModel = mongoose.model('user', UserSchema);
 module.exports = UserModel;

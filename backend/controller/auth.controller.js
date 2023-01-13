@@ -31,3 +31,19 @@ exports.signup = async (req, res) => {
   });
   return res.status(200).json({ user, token });
 };
+
+exports.login = async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.json({
+      message: 'Please enter a valid email and password',
+    });
+  }
+  const user = await UserModel.findOne({ email: email }).select('+password');
+  console.log(user);
+
+  res.status(200).json({
+    message: 'success',
+  });
+};

@@ -8,6 +8,13 @@ const userSchema = Joi.object({
   password: Joi.string().required(),
 });
 
+const userLoginSchema = Joi.object({
+  email: Joi.string().email(),
+  password: Joi.string().required(),
+});
+
+
+
 const userValidatorMW = async (req, res, next) => {
   const userPayload = req.body;
   try {
@@ -21,4 +28,17 @@ const userValidatorMW = async (req, res, next) => {
   }
 };
 
-module.exports = { userValidatorMW };
+const userLoginValidatorMW = async (req, res, next) => {
+  const userPayload = req.body;
+  try {
+    await userLoginSchema.validateAsync(userPayload);
+    next();
+  } catch (error) {
+    next({
+      status: 400,
+      message: error.details[0].message,
+    });
+  }
+};
+
+module.exports = { userValidatorMW , userLoginValidatorMW};
