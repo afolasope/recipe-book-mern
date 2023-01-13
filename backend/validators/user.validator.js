@@ -4,7 +4,8 @@ const userSchema = Joi.object({
   firstName: Joi.string().required().trim(),
   lastName: Joi.string().required().trim(),
   username: Joi.string().required().trim(),
-  email: Joi.email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
+  email: Joi.string().email(),
+  password: Joi.string().required(),
 });
 
 const userValidatorMW = async (req, res, next) => {
@@ -14,8 +15,8 @@ const userValidatorMW = async (req, res, next) => {
     next();
   } catch (error) {
     next({
-      message: error.details[0].message,
       status: 400,
+      message: error.details[0].message,
     });
   }
 };

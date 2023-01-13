@@ -3,6 +3,6 @@ const { signup } = require('../controller/auth.controller');
 const { userValidatorMW } = require('../validators/user.validator');
 const authRouter = express.Router();
 
-authRouter.post('/', userValidatorMW, signup);
+authRouter.post('/signup', userValidatorMW, signup);
 
 module.exports = authRouter;

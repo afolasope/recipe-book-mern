@@ -3,6 +3,7 @@ const cors = require('cors');
 
 const app = express();
 require('dotenv').config();
+app.use(express.json());
 
 const PORT = process.env.PORT;
 require('./db').connectToMongoDB();
@@ -28,6 +29,11 @@ app.get('/', (req, res) => {
 app.use('/api/v1/categories', categoryRouter);
 app.use('/api/v1/recipes', recipeRouter);
 app.use('/api/v1/auth', authRouter);
+
+app.use(function (err, req, res, next) {
+  res.status(err.status || 500);
+  res.json({ error: err.message });
+});
 
 app.listen(PORT, () => {
   console.log(`server is listening on PORT:${PORT}`);
