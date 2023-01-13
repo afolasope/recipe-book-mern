@@ -1,6 +1,14 @@
 const jwt = require('jsonwebtoken');
 const UserModel = require('../models/user.model');
 
+const signToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN,
+  });
+
+  // jwt.sign
+};
+
 exports.signup = async (req, res) => {
   const { firstName, lastName, email, username, password } = req.body;
 
@@ -26,9 +34,7 @@ exports.signup = async (req, res) => {
     password,
   });
 
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN,
-  });
+  const token = signToken(user._id);
   return res.status(200).json({ user, token });
 };
 
@@ -41,9 +47,18 @@ exports.login = async (req, res) => {
     });
   }
   const user = await UserModel.findOne({ email: email }).select('+password');
-  console.log(user);
+  const validPassword = await user.isValidPassword(password, user.password);
 
-  res.status(200).json({
+  if (!user || !validPassword) {
+    return res.status(401).json({
+      message: 'Email or password is incorrect',
+    });
+  }
+
+  const token = signToken(user._id);
+
+  return res.status(200).json({
     message: 'success',
+    token,
   });
 };
