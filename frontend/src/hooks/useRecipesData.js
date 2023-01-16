@@ -2,7 +2,7 @@ import axios from 'axios';
 const { useQuery } = require('react-query');
 
 const fetchRecipes = (categoryID) => {
-  return axios.get(`http://localhost:8000/recipes/category/${categoryID}`);
+  return axios.get(`http://localhost:8000/api/v1/recipes/category/${categoryID}`);
 };
 
 const useRecipesData = (categoryID = '638f7e7c929d5ef3f04e439f') => {

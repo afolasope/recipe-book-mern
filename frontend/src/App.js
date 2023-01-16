@@ -3,24 +3,31 @@ import { BsFillBookmarkFill } from 'react-icons/bs';
 import { IoMdAdd } from 'react-icons/io';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
+import LoginSignupModal from './components/LoginSignupModal';
 import RecipesList from './components/RecipesList';
 import SingleRecipe from './components/SingleRecipe';
+import useToggle from './hooks/useToggle';
 import Home from './pages/Home';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 const queryClient = new QueryClient();
 
 function App() {
   const [queryID, setQueryID] = useState();
+  const { show: openModal, toggle: setOpenModal } = useToggle();
 
   return (
     <QueryClientProvider client={queryClient}>
       <Wrapper>
         <header>
-          <h1>Recipe Book</h1>
-          <div className="header-nav">
-            <p className="nav-item">
+          <h1>
+            <Link to="/"> Recipe Book</Link>
+          </h1>
+          <div className="header-nav relative">
+            <p className="nav-item" onClick={() => setOpenModal(true)}>
               <span>
                 <IoMdAdd />
               </span>
@@ -34,6 +41,7 @@ function App() {
             </p>
           </div>
         </header>
+        {openModal && <LoginSignupModal setOpenModal={setOpenModal} />}
 
         <Routes>
           <Route
@@ -49,6 +57,8 @@ function App() {
               }
             />
           </Route>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
         </Routes>
       </Wrapper>
       <ReactQueryDevtools initialIsOpen={false} />
@@ -76,6 +86,7 @@ const Wrapper = styled.div`
         align-items: center;
         justify-content: center;
         gap: 0.2rem;
+        cursor: pointer;
         span:first-of-type {
           height: 2rem;
           width: 2rem;

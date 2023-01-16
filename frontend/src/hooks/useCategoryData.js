@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useQuery } from 'react-query';
 
 const fetchCategories = async () => {
-  return axios.get(`http://localhost:8000/categories`);
+  return axios.get(`http://localhost:8000/api/v1/categories`);
 };
 
 const useCategoryData = () => {
