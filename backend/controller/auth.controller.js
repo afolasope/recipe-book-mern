@@ -10,19 +10,13 @@ const signToken = (id) => {
 };
 
 exports.signup = async (req, res) => {
-  const { firstName, lastName, email, username, password } = req.body;
+  const { firstName, lastName, email,  password } = req.body;
 
   const checkEmail = await UserModel.findOne({ email });
-  const checkUsername = await UserModel.findOne({ username });
 
   if (checkEmail) {
     return res.status(400).json({
       message: 'email is already in use',
-    });
-  }
-  if (checkUsername) {
-    return res.status(400).json({
-      message: 'username is already in use',
     });
   }
 
@@ -30,7 +24,6 @@ exports.signup = async (req, res) => {
     firstName,
     lastName,
     email,
-    username,
     password,
   });
 

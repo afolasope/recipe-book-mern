@@ -1,31 +1,61 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { useFormik } from 'formik';
 
 const Signup = () => {
+  const formik = useFormik({
+    initialValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+    },
+  });
+
   return (
     <Wrapper>
       <form>
         <p className="title">Create an account to get started</p>
         <div>
           <p>First Name:</p>
-          <input type="text" id="firstName" name="firstName" />
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            onChange={formik.handleChange}
+            value={formik.values.firstName}
+          />
         </div>
         <div>
           <p>Last Name:</p>
-          <input type="text" id="lastName" name="lastName" />
-        </div>
-        <div>
-          <p>Username:</p>
-          <input type="text" id="username" name="username" />
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            onChange={formik.handleChange}
+            value={formik.values.lastName}
+          />
         </div>
         <div>
           <p>Email:</p>
-          <input type="email" id="email" name="email" />
+          <input
+            type="email"
+            id="email"
+            name="email"
+            onChange={formik.handleChange}
+            value={formik.values.email}
+          />
         </div>
         <div>
           <p>Password:</p>
-          <input type="password" id="password" name="password" />
+          <input
+            type="password"
+            id="password"
+            name="password"
+            onChange={formik.handleChange}
+            value={formik.values.password}
+          />
         </div>
         <div>
           <p>

@@ -3,7 +3,6 @@ const Joi = require('joi');
 const userSchema = Joi.object({
   firstName: Joi.string().required().trim(),
   lastName: Joi.string().required().trim(),
-  username: Joi.string().required().trim(),
   email: Joi.string().email(),
   password: Joi.string().required(),
 });
