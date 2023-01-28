@@ -10,7 +10,7 @@ const signToken = (id) => {
 };
 
 exports.signup = async (req, res) => {
-  const { firstName, lastName, email,  password } = req.body;
+  const { firstName, lastName, email, password } = req.body;
 
   const checkEmail = await UserModel.findOne({ email });
 
@@ -28,7 +28,7 @@ exports.signup = async (req, res) => {
   });
 
   const token = signToken(user._id);
-  return res.status(200).json({ user, token });
+  return res.status(200).json({ data: {token} });
 };
 
 exports.login = async (req, res) => {
