@@ -3,9 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { useQuery } from 'react-query';
-import authService from '../service/authService';
 import { useState } from 'react';
+import { useSignupMutation } from '../hooks/useSignupMutation';
 
 const validationSchema = Yup.object({
   firstName: Yup.string().required('First name is required'),
@@ -24,28 +23,24 @@ const initialValues = {
 };
 
 const Signup = () => {
+  const { mutateAsync } = useSignupMutation();
+  const [errorMessage, setErrorMessage] = useState();
   const navigate = useNavigate();
-  const [authToken, setAuthToken] = useState();
-
   const onSubmit = async (values) => {
-    const newValues = {
-      ...values,
-      firstName: values.firstName.toLowerCase(),
-      lastName: values.lastName.toLowerCase(),
-    };
     try {
-      const response = await authService.register(newValues);
-      console.log(response);
-      if (response?.data.token) {
-        setAuthToken(
-          localStorage.setItem('token', JSON.stringify(response.data.token))
-        );
-        navigate('/');
-      }
+      mutateAsync(values, {
+        onSuccess: (data) => {
+          navigate('/create-recipe');
+        },
+        onError: (response) => {
+          setErrorMessage();
+        },
+      });
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
     <Wrapper>
       <Formik

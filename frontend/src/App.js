@@ -16,6 +16,7 @@ import Signup from './pages/Signup';
 const queryClient = new QueryClient();
 
 function App() {
+  const [user, setUser] = useState(false);
   const [queryID, setQueryID] = useState();
   const { show: openModal, toggle: setOpenModal } = useToggle();
 

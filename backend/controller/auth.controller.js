@@ -5,14 +5,14 @@ const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
-
-  // jwt.sign
 };
 
 exports.signup = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
 
   const checkEmail = await UserModel.findOne({ email });
+
+  console.log(req.headers);
 
   if (checkEmail) {
     return res.status(400).json({
@@ -28,7 +28,7 @@ exports.signup = async (req, res) => {
   });
 
   const token = signToken(user._id);
-  return res.status(200).json({ data: {token} });
+  return res.status(200).json({ data: { token } });
 };
 
 exports.login = async (req, res) => {
