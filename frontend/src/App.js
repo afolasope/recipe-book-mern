@@ -6,9 +6,11 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { Link, Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 import LoginSignupModal from './components/LoginSignupModal';
+import Protected from './components/Protected';
 import RecipesList from './components/RecipesList';
 import SingleRecipe from './components/SingleRecipe';
 import useToggle from './hooks/useToggle';
+import CreateRecipe from './pages/CreateRecipe';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -60,6 +62,14 @@ function App() {
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route
+            path="/create-recipe"
+            element={
+              <Protected isUser={user}>
+                <CreateRecipe />
+              </Protected>
+            }
+          ></Route>
         </Routes>
       </Wrapper>
       <ReactQueryDevtools initialIsOpen={false} />
