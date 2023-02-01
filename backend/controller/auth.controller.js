@@ -28,7 +28,7 @@ exports.signup = async (req, res) => {
   });
 
   const token = signToken(user._id);
-  return res.status(200).json({ data: { token } });
+  return res.status(200).json(token);
 };
 
 exports.login = async (req, res) => {

@@ -22,6 +22,8 @@ const initialValues = {
   password: '',
 };
 
+
+
 const Signup = () => {
   const { mutateAsync } = useSignupMutation();
   const [errorMessage, setErrorMessage] = useState();
@@ -30,7 +32,9 @@ const Signup = () => {
     try {
       mutateAsync(values, {
         onSuccess: (data) => {
+          const { data: token } = data;
           navigate('/create-recipe');
+          localStorage.setItem('access_token', token);
         },
         onError: (response) => {
           setErrorMessage();

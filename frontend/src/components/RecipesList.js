@@ -8,7 +8,7 @@ const RecipesList = () => {
   const { data, isLoading, isError } = useRecipesData(id);
 
   useEffect(() => {
-    localStorage.setItem('recipesList', JSON.stringify(data));
+    localStorage.setItem('recipesList', (data));
   }, [data]);
 
   if (isLoading) {

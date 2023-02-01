@@ -3,7 +3,7 @@ import { BsFillBookmarkFill } from 'react-icons/bs';
 import { IoMdAdd } from 'react-icons/io';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import LoginSignupModal from './components/LoginSignupModal';
 import Protected from './components/Protected';
@@ -16,11 +16,21 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 
 const queryClient = new QueryClient();
+const localToken = localStorage.getItem('access_token') || undefined;
 
 function App() {
-  const [user, setUser] = useState(false);
+  const navigate = useNavigate();
+
+  const [user, setUser] = useState(!!localToken);
   const [queryID, setQueryID] = useState();
   const { show: openModal, toggle: setOpenModal } = useToggle();
+
+  const handleAddRecipe = () => {
+    if (user) {
+      return navigate('/create-recipe');
+    }
+    setOpenModal(true);
+  };
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -30,7 +40,7 @@ function App() {
             <Link to="/"> Recipe Book</Link>
           </h1>
           <div className="header-nav relative">
-            <p className="nav-item" onClick={() => setOpenModal(true)}>
+            <p className="nav-item" onClick={handleAddRecipe}>
               <span>
                 <IoMdAdd />
               </span>
@@ -70,6 +80,7 @@ function App() {
               </Protected>
             }
           ></Route>
+          {/* <Route path="/create-recipe" element={<CreateRecipe />}></Route> */}
         </Routes>
       </Wrapper>
       <ReactQueryDevtools initialIsOpen={false} />
