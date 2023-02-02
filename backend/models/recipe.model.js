@@ -1,3 +1,4 @@
+const { string } = require('joi');
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
@@ -23,6 +24,7 @@ const RecipeSchema = new Schema({
       cooking_time: Number,
     },
   },
+  categoryName: { type: String },
   categoryID: {
     type: Schema.Types.ObjectId,
     ref: 'categories',

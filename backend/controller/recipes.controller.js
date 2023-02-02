@@ -1,3 +1,4 @@
+const CategoryModel = require('../models/category.model');
 const RecipeModel = require('../models/recipe.model');
 
 exports.getAllRecipes = async (req, res) => {
@@ -16,4 +17,43 @@ exports.getRecipeByCategory = async (req, res) => {
   const { id } = req.params;
   const category = await RecipeModel.find({ categoryID: id });
   res.send(category);
+};
+
+exports.addRecipe = async (req, res) => {
+  const { user } = req;
+  const {
+    data: {
+      recipe: { publisher },
+      ingredients,
+      source_url,
+      image_url,
+      title,
+      servings,
+      cooking_time,
+    },
+    categoryName,
+    categoryID,
+  } = req.body;
+  const findCategoryID = await CategoryModel.find({ categoryName });
+  const newRecipe = await RecipeModel.create({
+    data: {
+      recipe: {
+        publisher,
+        ingredients,
+        source_url,
+        image_url,
+        title,
+        servings,
+        cooking_time,
+      },
+    },
+    categoryID: findCategoryID._id,
+    categoryName,
+  });
+  if (recipe) {
+    return res.status(400).send({
+      message: 'recipe creation failed',
+    });
+  }
+  res.status(200).send(recipe);
 };
