@@ -20,7 +20,6 @@ exports.getRecipeByCategory = async (req, res) => {
 };
 
 exports.addRecipe = async (req, res) => {
-  const { user } = req;
   const {
     data: {
       recipe: { publisher },
@@ -32,7 +31,6 @@ exports.addRecipe = async (req, res) => {
       cooking_time,
     },
     categoryName,
-    categoryID,
   } = req.body;
   const findCategoryID = await CategoryModel.find({ categoryName });
   const newRecipe = await RecipeModel.create({
@@ -47,13 +45,13 @@ exports.addRecipe = async (req, res) => {
         cooking_time,
       },
     },
-    categoryID: findCategoryID._id,
     categoryName,
+    categoryID: findCategoryID._id,
   });
-  if (recipe) {
+  if (!newRecipe) {
     return res.status(400).send({
       message: 'recipe creation failed',
     });
   }
-  res.status(200).send(recipe);
+  res.status(200).send({ message: 'talk to the hand' });
 };
